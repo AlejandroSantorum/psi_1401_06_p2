@@ -52,7 +52,7 @@ class AboutPageTests(TestCase):
         # Check if in the about page is there -
         # and contains the specified message
         # Exercise from Chapter 4
-        response = self.client.get(reverse('about'))
+        response = self.client.get(reverse('rango:about'))
         self.assertIn(b'This tutorial has been put together by',
                       response.content)
 
@@ -60,11 +60,11 @@ class AboutPageTests(TestCase):
         # Check if is there an image on the about page
         # in URL media
         # Chapter 4
-        response = self.client.get(reverse('about'))
+        response = self.client.get(reverse('rango:about'))
         self.assertIn(b'img src="/media/', response.content)
 
     def test_about_using_template(self):
         #  Check the template used to render index page
         #  Exercise from Chapter 4
-        response = self.client.get(reverse('about'))
+        response = self.client.get(reverse('rango:about'))
         self.assertTemplateUsed(response, 'rango/about.html')
