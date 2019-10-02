@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from rango.models import Category
-# from django.http import HttpResponse
-# Import the Category model
-from rango.models import Category
+from rango.models import Page
 
 
 def index(request):
@@ -17,6 +15,22 @@ def index(request):
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
     return render(request, 'rango/index.html', context=context_dict)
+
+def show_category(request, category_name_slug):
+    context_dict = {}
+    try:
+        # Get the category associated with the slug from the DB
+        category = Category.objects.get(slug=category_name_slug)
+        # Get the pages given a retrieved category
+        pages = Page.objects.filter(category=category)
+        # Adds our results list to the template context under name pages.
+        context_dict['pages'] = pages
+        context_dict['category'] = category
+    except Category.DoesNotExist:
+        context_dict['pages'] = None
+        context_dict['category'] = None
+
+    return render(request, 'rango/category.html', context=context_dict)
 
 
 def about(request):
