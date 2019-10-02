@@ -90,11 +90,11 @@ class Chapter5ViewTests(TestCase):
 
     def test_show_category(self):
         response = self.client.get(
-            reverse('show_category', kwargs={'category_name_slug': 'python'}))
+            reverse('rango:show_category', kwargs={'category_name_slug': 'python'}))
         self.assertIn(b'How to Think like a Computer Scientis',
                       response.content)
         response = self.client.get(
-            reverse('show_category',
+            reverse('rango:show_category',
                     kwargs={'category_name_slug': 'asdfgh'}))
         self.assertIn(b'The specified category does not exist',
                       response.content)
