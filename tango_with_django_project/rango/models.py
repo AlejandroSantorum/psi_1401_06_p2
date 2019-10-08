@@ -29,6 +29,7 @@ class Page(models.Model):
     def __str__(self):
         return self.title
 
+
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(User, on_delete=models.CASCADE)

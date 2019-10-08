@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from rango.models import Category, Page, UserProfile
+from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     # Construct a dictionary to pass to the template engine as its context.
@@ -43,6 +44,7 @@ def about(request):
                     'This tutorial has been put together by Alex and Rafael'}
     return render(request, 'rango/about.html', context=context_dict)
 
+
 @login_required
 def add_category(request):
     form = CategoryForm()
@@ -60,6 +62,7 @@ def add_category(request):
             print(form.errors)
 
     return render(request, 'rango/add_category.html', {'form': form})
+
 
 @login_required
 def add_page(request, category_name_slug):
@@ -87,6 +90,7 @@ def add_page(request, category_name_slug):
 
     context_dict = {'form': form, 'category': category}
     return render(request, 'rango/add_page.html', context_dict)
+
 
 def register(request):
     registered = False
@@ -126,6 +130,7 @@ def register(request):
                   {'user_form': user_form,
                    'profile_form': profile_form,
                    'registered': registered})
+
 
 def user_login(request):
     if request.method == 'POST':
