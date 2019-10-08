@@ -8,7 +8,6 @@ from django.urls import reverse
 from populate_rango import populate
 from rango.models import Category
 
-
 class Chapter6FormTests(TestCase):
 
     def setUp(self):
@@ -19,7 +18,7 @@ class Chapter6FormTests(TestCase):
             print('The module populate_rango does not exist')
         except NameError:
             print('The function populate() does not exist or is not correct')
-        except Exception:
+        except:
             print('Something went wrong in the populate() function :-(')
 
         # Check forms are defined
@@ -46,5 +45,6 @@ class Chapter6FormTests(TestCase):
 
     def test_python_category_added(self):
         cat = self.get_category('Python')
-        self.client.get(reverse('add_page'))
+        print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", cat)
+        self.client.get(reverse('rango:add_page', kwargs={'category_name_slug':cat.slug} ))
         self.assertIsNotNone(cat)

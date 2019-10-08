@@ -66,5 +66,8 @@ class AboutPageTests(TestCase):
     def test_about_using_template(self):
         #  Check the template used to render index page
         #  Exercise from Chapter 4
+        import time
+#        time.sleep(20)
+        
         response = self.client.get(reverse('rango:about'))
         self.assertTemplateUsed(response, 'rango/about.html')
