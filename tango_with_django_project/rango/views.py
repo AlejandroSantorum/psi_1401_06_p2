@@ -3,7 +3,8 @@ from django.urls import reverse
 from rango.models import Category, Page, UserProfile
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     # Construct a dictionary to pass to the template engine as its context.
@@ -42,7 +43,7 @@ def about(request):
                     'This tutorial has been put together by Alex and Rafael'}
     return render(request, 'rango/about.html', context=context_dict)
 
-
+@login_required
 def add_category(request):
     form = CategoryForm()
 
@@ -60,7 +61,7 @@ def add_category(request):
 
     return render(request, 'rango/add_category.html', {'form': form})
 
-
+@login_required
 def add_page(request, category_name_slug):
     # Tries to retrieve the category given the slug
     try:
@@ -138,9 +139,20 @@ def user_login(request):
                 login(request, user)
                 return redirect(reverse('rango:index'))
             else:
-                return HttpResponse('Your Rago account is disabled.')
+                return HttpResponse('Your Rango account is disabled.')
         else:
             print("Invalid login details: {0}, {1}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'rango/login.html')
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('rango:index'))
+
+
+@login_required
+def restricted(request):
+    return render(request, 'rango/restricted.html')
