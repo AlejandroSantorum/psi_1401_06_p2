@@ -1,6 +1,14 @@
-# Uncomment if you want to run tests in transaction mode with a final rollback
-# from django.test import TestCase
-# uncomment this if you want to keep data after running tests
+# Write here any updates to this file after first release in moodle.
+# modification date,    description
+#jue oct 10 14:27:19 CEST 2019, add name space "rango" to reverse calls
+#sat oct 12: added variable SIGIN and SIGNOUT
+#########################################################################
+# you may modified the following twolines
+SIGNIN=b'Sign In'
+SIGNUP=b'Sign Up'
+###########################
+# Nothing to be modified below this line
+###########################
 from unittest import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -51,8 +59,8 @@ class UserAuthenticationTests(TestCase):
 
         # test message
         self.assertEqual(response.status_code, 200)  # redirection
-        self.assertIn(b'Sign In', response.content)
-        self.assertIn(b'Sign Up', response.content)
+        self.assertIn(SIGNIN, response.content)
+        self.assertIn(SIGNUP, response.content)
         self.assertNotIn(b'Logout', response.content)
         self.assertNotIn(b'Add a New Category', response.content)
 
